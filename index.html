@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renzo Fernandez-45352</title>
+
+</head>
+<body>
+    <div>
+        <center>
+            <h1 >Es un simple juego para ver quien te ataca y quien te defiende</h1>
+        </center>
+    </div>
+    <div >
+        <center>
+            <h2>Ellos lo atacaran</h2>
+         </center>
+        <table cellspacing="150" bgcolor=ADFEF8 >
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Biografia</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody id="elem">
+            </tbody>
+
+        </table>
+
+    </div>
+    <div >
+        <center>
+            <h2>Y ellos lo defenderan</h2>
+        </center>   
+        <table cellspacing="150" bgcolor=FCFA8A >
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Biografia</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody id="elemD">
+            </tbody>
+
+        </table>
+
+    </div>
+    <footer>
+       <p align="center"> Si la imagen no aparecen es un problema de la api</p>
+    </footer>
+    
+</body>
+</html> 
+<script>
+    var bio;
+    var cuerpo = ''
+    var cuerpoD = ''
+    const url = "http://gateway.marvel.com/v1/public/characters?ts=1&apikey=056ad3162e492159691a27eb1fa6c344&hash=376ad7af293e4311bb46eafd96391885";
+    fetch(url)
+    .then(response => response.json())
+    .then(json => mostrarData(json))
+    .catch(err => console.log(err))
+    const mostrarData = (json) => {
+                   
+                    console.log(json)
+                    for (let i = 0; i<2; i++){
+                   
+                    let ran = parseInt(Math.random()*20);
+                    if(json.data.results[ran].description == ''){
+                         bio = 'no hay biografia disponible'
+                    }
+                    else{
+                         bio = json.data.results[ran].description
+                    }
+                   
+                    let imagen = json.data.results[ran].thumbnail.path+".jpg"
+                    
+                    cuerpo +=`<tr><td>${json.data.results[ran].name}</td><td>${bio}</td><td><img src=${imagen}></img></td></tr>`
+                
+                    }
+
+                    for (let i = 0; i<2; i++){
+                    let ran = parseInt(Math.random()*20);
+                    if(json.data.results[ran].description == ''){
+                         bio = 'no hay biografia disponible'
+                    }
+                    else{
+                         bio = json.data.results[ran].description
+                    }
+                    
+                    let imagen = json.data.results[ran].thumbnail.path+".jpg"
+                    
+                    cuerpoD +=`<tr><td>${json.data.results[ran].name}</td><td>${bio}</td><td><img src=${imagen}></img></td></tr>`
+                
+                    }
+                 document.getElementById('elem').innerHTML = cuerpo
+                 document.getElementById('elemD').innerHTML = cuerpoD
+                    
+                }
+    
+    
+
+</script>
+
